@@ -1,0 +1,254 @@
+/*==================================
+  VARIABLES Y RESET BÁSICO
+==================================*/
+:root {
+    --color-primary: #007bff;      /* Azul Booking/Primario */
+    --color-secondary: #ffc107;    /* Amarillo para Rating/Destacado */
+    --color-background: #f8f9fa;   /* Fondo general muy suave */
+    --color-surface: #ffffff;      /* Fondo de tarjetas y paneles */
+    --color-text-dark: #343a40;    /* Texto principal oscuro */
+    --color-text-price: #d9534f;   /* Rojo para precios */
+    --shadow-light: 0 2px 4px rgba(0, 0, 0, 0.08);
+    --shadow-deep: 0 8px 16px rgba(0, 0, 0, 0.15);
+    --border-radius: 8px;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    background-color: var(--color-background);
+    color: var(--color-text-dark);
+}
+
+/*==================================
+  HEADER
+==================================*/
+header {
+    background-color: var(--color-primary);
+    color: var(--color-surface);
+    padding: 1.5rem;
+    text-align: center;
+    box-shadow: var(--shadow-deep);
+    margin-bottom: 20px;
+}
+
+header h1 {
+    font-size: 2rem;
+    font-weight: 300;
+}
+
+/*==================================
+  LAYOUT PRINCIPAL (GRID RESPONSIVO)
+==================================*/
+.grid-container {
+    display: grid;
+    gap: 25px;
+    padding: 20px;
+    max-width: 1300px;
+    margin: 0 auto;
+    /* Configuración por defecto (Desktop) */
+    grid-template-columns: 300px 1fr; 
+}
+
+/* 📱 Media Query para Móvil */
+@media (max-width: 768px) {
+    .grid-container {
+        grid-template-columns: 1fr; /* Una sola columna para móvil */
+    }
+
+    .filters-panel {
+        order: -1; /* Mueve filtros arriba */
+    }
+}
+
+/*==================================
+  PANELES (Filtros y Resultados)
+==================================*/
+.filters-panel, .results-section {
+    background: var(--color-surface);
+    padding: 25px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-deep); /* Sombra más definida */
+}
+
+/* Estilos de Filtros */
+#filter-inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Más espacio entre inputs */
+    margin-bottom: 20px;
+}
+
+.filters-panel h2, .filters-panel h3 {
+    color: var(--color-primary);
+    margin-bottom: 15px;
+    border-bottom: 1px solid #e9ecef;
+    padding-bottom: 5px;
+}
+
+label {
+    font-weight: 600;
+    /* Necesario para alinear el checkbox con el texto si se añade */
+    display: flex; 
+    align-items: center;
+    gap: 5px; 
+}
+
+/* Estilo para los inputs de texto/número */
+input[type="text"], input[type="number"], select {
+    padding: 10px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    width: 100%;
+    margin-top: 5px;
+}
+
+/*==================================
+  BOTONES y TOOLBAR
+==================================*/
+#search-button {
+    width: 100%;
+    padding: 12px;
+    background-color: var(--color-primary);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    transition: background-color 0.3s ease;
+}
+
+#search-button:hover {
+    background-color: #0056b3;
+}
+
+.toolbar {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e9ecef;
+}
+
+/*==================================
+  LISTA DE RESULTADOS (Flexbox)
+==================================*/
+.results-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.placeholder-text {
+    text-align: center;
+    color: #6c757d;
+    padding: 50px;
+}
+
+/* Tarjeta de Hotel (usando Flexbox) */
+.hotel-card {
+    display: flex;
+    border: 1px solid #dee2e6;
+    border-radius: var(--border-radius);
+    overflow: hidden; 
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    min-height: 180px; /* Incrementamos la altura para la imagen */
+    align-items: stretch; /* Asegura que la imagen y la info ocupen toda la altura */
+}
+
+.hotel-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* ✨ NUEVOS ESTILOS PARA LA IMAGEN DEL HOTEL */
+.hotel-image {
+    flex-shrink: 0; /* Evita que el contenedor de la imagen se encoja */
+    width: 180px;   /* Ancho fijo para la imagen en escritorio */
+    overflow: hidden;
+}
+
+.hotel-image img {
+    width: 100%;
+    height: 100%; 
+    object-fit: cover; /* Asegura que la imagen cubra el área sin distorsionarse */
+    display: block; 
+}
+
+
+.hotel-info {
+    flex-grow: 1;
+    padding: 20px;
+}
+
+.hotel-info h3 {
+    margin-top: 0;
+    color: var(--color-primary);
+    font-size: 1.4rem;
+    margin-bottom: 5px;
+}
+
+.hotel-info p {
+    margin: 5px 0;
+}
+
+/* Detalles de Precio */
+.hotel-price-details {
+    flex-shrink: 0;
+    width: 180px; /* Ancho fijo para la columna de precio */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #e9f5ff; /* Fondo muy claro para destacar el precio */
+    padding: 20px;
+    text-align: center;
+    gap: 5px;
+}
+
+.hotel-price {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: var(--color-text-price); 
+}
+
+.hotel-rating {
+    font-weight: bold;
+    color: var(--color-secondary); /* Color amarillo para ratings */
+    font-size: 1.1rem;
+}
+
+.hotel-info small {
+    color: #6c757d;
+}
+
+/*==================================
+  RESPONSIVIDAD DE LA TARJETA
+==================================*/
+@media (max-width: 576px) {
+    .hotel-card {
+        flex-direction: column; /* Apila info y precio en móvil */
+        min-height: auto;
+    }
+
+    /* ✨ ESTILOS PARA LA IMAGEN EN MÓVIL */
+    .hotel-image {
+        width: 100%;   /* La imagen ocupa todo el ancho en móvil */
+        height: 180px; /* Altura fija para la imagen en móvil */
+        border-bottom: 1px solid #dee2e6;
+    }
+    
+    .hotel-price-details {
+        width: 100%;
+        padding: 10px 20px;
+        background-color: #f1f1f1; 
+        border-top: none;
+    }
+}
