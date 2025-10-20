@@ -1,254 +1,236 @@
-/*==================================
-  VARIABLES Y RESET BÁSICO
-==================================*/
-:root {
-    --color-primary: #007bff;      /* Azul Booking/Primario */
-    --color-secondary: #ffc107;    /* Amarillo para Rating/Destacado */
-    --color-background: #f8f9fa;   /* Fondo general muy suave */
-    --color-surface: #ffffff;      /* Fondo de tarjetas y paneles */
-    --color-text-dark: #343a40;    /* Texto principal oscuro */
-    --color-text-price: #d9534f;   /* Rojo para precios */
-    --shadow-light: 0 2px 4px rgba(0, 0, 0, 0.08);
-    --shadow-deep: 0 8px 16px rgba(0, 0, 0, 0.15);
-    --border-radius: 8px;
-}
-
+/* ===== Reset básico ===== */
 * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
 
 body {
-    font-family: 'Helvetica Neue', Arial, sans-serif;
-    background-color: var(--color-background);
-    color: var(--color-text-dark);
+  background: #f5f7fa;
+  color: #333;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
-/*==================================
-  HEADER
-==================================*/
+/* ===== Header ===== */
 header {
-    background-color: var(--color-primary);
-    color: var(--color-surface);
-    padding: 1.5rem;
-    text-align: center;
-    box-shadow: var(--shadow-deep);
-    margin-bottom: 20px;
+  background: #003580;
+  color: white;
+  text-align: center;
+  padding: 1.5rem 1rem;
+  font-size: 1.8rem;
+  font-weight: bold;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
-header h1 {
-    font-size: 2rem;
-    font-weight: 300;
-}
-
-/*==================================
-  LAYOUT PRINCIPAL (GRID RESPONSIVO)
-==================================*/
+/* ===== Layout principal ===== */
 .grid-container {
-    display: grid;
-    gap: 25px;
-    padding: 20px;
-    max-width: 1300px;
-    margin: 0 auto;
-    /* Configuración por defecto (Desktop) */
-    grid-template-columns: 300px 1fr; 
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 1.5rem;
+  padding: 1.5rem;
 }
 
-/* 📱 Media Query para Móvil */
-@media (max-width: 768px) {
-    .grid-container {
-        grid-template-columns: 1fr; /* Una sola columna para móvil */
-    }
-
-    .filters-panel {
-        order: -1; /* Mueve filtros arriba */
-    }
+/* ===== Panel lateral (Filtros) ===== */
+.filters-panel {
+  background: white;
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
 }
 
-/*==================================
-  PANELES (Filtros y Resultados)
-==================================*/
-.filters-panel, .results-section {
-    background: var(--color-surface);
-    padding: 25px;
-    border-radius: var(--border-radius);
-    box-shadow: var(--shadow-deep); /* Sombra más definida */
+.filters-panel h2 {
+  color: #0054a6;
+  margin-bottom: 0.5rem;
 }
 
-/* Estilos de Filtros */
-#filter-inputs {
-    display: flex;
-    flex-direction: column;
-    gap: 15px; /* Más espacio entre inputs */
-    margin-bottom: 20px;
+.filters-panel h3 {
+  margin-top: 1rem;
+  color: #003580;
 }
 
-.filters-panel h2, .filters-panel h3 {
-    color: var(--color-primary);
-    margin-bottom: 15px;
-    border-bottom: 1px solid #e9ecef;
-    padding-bottom: 5px;
+.filters-panel label {
+  display: block;
+  font-size: 0.95rem;
+  margin: 0.3rem 0;
 }
 
-label {
-    font-weight: 600;
-    /* Necesario para alinear el checkbox con el texto si se añade */
-    display: flex; 
-    align-items: center;
-    gap: 5px; 
+.filters-panel input[type="text"],
+.filters-panel input[type="number"] {
+  width: 100%;
+  padding: 0.6rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  margin-top: 0.3rem;
 }
 
-/* Estilo para los inputs de texto/número */
-input[type="text"], input[type="number"], select {
-    padding: 10px;
-    border: 1px solid #ced4da;
-    border-radius: 4px;
-    width: 100%;
-    margin-top: 5px;
+.filters-panel hr {
+  margin: 1rem 0;
+  border: none;
+  border-bottom: 1px solid #ddd;
 }
 
-/*==================================
-  BOTONES y TOOLBAR
-==================================*/
-#search-button {
-    width: 100%;
-    padding: 12px;
-    background-color: var(--color-primary);
-    color: white;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 1.1rem;
-    transition: background-color 0.3s ease;
+.filters-panel button {
+  margin-top: 1rem;
+  background: #0071c2;
+  color: white;
+  border: none;
+  padding: 0.8rem 1rem;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
 }
 
-#search-button:hover {
-    background-color: #0056b3;
+.filters-panel button:hover {
+  background: #005fa3;
 }
 
+.filters-panel button:disabled {
+  background: #9bb9da;
+  cursor: not-allowed;
+}
+
+/* ===== Sección de resultados ===== */
+.results-section {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* Toolbar */
 .toolbar {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    gap: 15px;
-    margin-bottom: 20px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid #e9ecef;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 0.5rem;
 }
 
-/*==================================
-  LISTA DE RESULTADOS (Flexbox)
-==================================*/
+.toolbar label {
+  font-weight: 600;
+}
+
+.toolbar select {
+  padding: 0.5rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+/* Lista de resultados */
 .results-list {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
 }
 
+/* Texto placeholder */
 .placeholder-text {
-    text-align: center;
-    color: #6c757d;
-    padding: 50px;
+  text-align: center;
+  color: #777;
+  font-style: italic;
+  margin-top: 2rem;
 }
 
-/* Tarjeta de Hotel (usando Flexbox) */
+.placeholder-text.error {
+  color: #c0392b;
+  font-weight: 600;
+}
+
+/* ===== Tarjetas de hotel ===== */
 .hotel-card {
-    display: flex;
-    border: 1px solid #dee2e6;
-    border-radius: var(--border-radius);
-    overflow: hidden; 
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    min-height: 180px; /* Incrementamos la altura para la imagen */
-    align-items: stretch; /* Asegura que la imagen y la info ocupen toda la altura */
+  display: grid;
+  grid-template-columns: 130px 1fr auto;
+  align-items: stretch;
+  gap: 1rem;
+  padding: 1rem;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .hotel-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.12);
 }
 
-/* ✨ NUEVOS ESTILOS PARA LA IMAGEN DEL HOTEL */
-.hotel-image {
-    flex-shrink: 0; /* Evita que el contenedor de la imagen se encoja */
-    width: 180px;   /* Ancho fijo para la imagen en escritorio */
-    overflow: hidden;
-}
-
+/* Imagen del hotel */
 .hotel-image img {
-    width: 100%;
-    height: 100%; 
-    object-fit: cover; /* Asegura que la imagen cubra el área sin distorsionarse */
-    display: block; 
+  width: 130px;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
 }
 
-
+/* Información del hotel */
 .hotel-info {
-    flex-grow: 1;
-    padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .hotel-info h3 {
-    margin-top: 0;
-    color: var(--color-primary);
-    font-size: 1.4rem;
-    margin-bottom: 5px;
+  font-size: 1.1rem;
+  color: #003580;
+  margin-bottom: 0.3rem;
 }
 
 .hotel-info p {
-    margin: 5px 0;
-}
-
-/* Detalles de Precio */
-.hotel-price-details {
-    flex-shrink: 0;
-    width: 180px; /* Ancho fijo para la columna de precio */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background-color: #e9f5ff; /* Fondo muy claro para destacar el precio */
-    padding: 20px;
-    text-align: center;
-    gap: 5px;
-}
-
-.hotel-price {
-    font-size: 2.2rem;
-    font-weight: 700;
-    color: var(--color-text-price); 
-}
-
-.hotel-rating {
-    font-weight: bold;
-    color: var(--color-secondary); /* Color amarillo para ratings */
-    font-size: 1.1rem;
+  font-size: 0.9rem;
+  color: #444;
 }
 
 .hotel-info small {
-    color: #6c757d;
+  color: #777;
 }
 
-/*==================================
-  RESPONSIVIDAD DE LA TARJETA
-==================================*/
-@media (max-width: 576px) {
-    .hotel-card {
-        flex-direction: column; /* Apila info y precio en móvil */
-        min-height: auto;
-    }
+/* Precio */
+.hotel-price-details {
+  text-align: right;
+  align-self: center;
+}
 
-    /* ✨ ESTILOS PARA LA IMAGEN EN MÓVIL */
-    .hotel-image {
-        width: 100%;   /* La imagen ocupa todo el ancho en móvil */
-        height: 180px; /* Altura fija para la imagen en móvil */
-        border-bottom: 1px solid #dee2e6;
-    }
-    
-    .hotel-price-details {
-        width: 100%;
-        padding: 10px 20px;
-        background-color: #f1f1f1; 
-        border-top: none;
-    }
+.hotel-price {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #0071c2;
+}
+
+/* ===== Responsivo ===== */
+@media (max-width: 900px) {
+  .grid-container {
+    grid-template-columns: 1fr;
+  }
+
+  .filters-panel {
+    order: 2;
+  }
+
+  .results-section {
+    order: 1;
+  }
+
+  
+
+  .hotel-image img {
+    width: 100%;
+    height: 200px;
+  }
+
+  .hotel-price-details {
+    text-align: center;
+    margin-top: 0.5rem;
+  }
 }

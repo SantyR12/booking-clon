@@ -1,4 +1,11 @@
-// src/SearchFiltersManager.js
+// Implementación del Patrón Singleton
+// Esta lógica asegura que solo se pueda crear una instancia de la clase, garantizando la unicidad del estado.
+// Clase que maneja el estado de los filtros de búsqueda
+// Este estado se actualiza cuando se realizan cambios en los filtros
+// Se puede acceder a través de la propiedad getState() y actualizar con updateState()      
+// Esto permite que el estado sea manejado de manera centralizada y que sea visible a través de un provider
+// Esto permite que los componentes puedan acceder al estado de manera reactiva y actualizada           
+
 class SearchFiltersManager {
     constructor() {
         if (SearchFiltersManager.instance) {
@@ -16,7 +23,7 @@ class SearchFiltersManager {
         SearchFiltersManager.instance = this;
     }
 
-    // Método para actualizar cualquier parte del estado
+    // Aqui el metodo se utiliza para actualizar cualquier parte del estado
     updateState(newState) {
         this.state = { ...this.state, ...newState };
         console.log('Filtros Actualizados:', this.state);
@@ -28,5 +35,5 @@ class SearchFiltersManager {
     }
 }
 
-// Exportamos la instancia única
+// se exporta la instancia única
 export const filtersManager = new SearchFiltersManager();

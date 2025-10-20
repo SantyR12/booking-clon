@@ -1,11 +1,15 @@
 // src/ResultsList.js
+
 import { SortByPriceStrategy } from './SortStrategy.js';
+
+// Este srchivo muestra los resultados de la búsqueda y se implementa con la siguiente clase, actuando como contexto del patron strategy
+// esta clase matiene la liste de hoteles y la estrategia de ordenamiento actual y delega el ordenamiento a la estrategia elegida antes de renderiza la vista
 
 export class ResultsList {
     constructor(containerElementId) {
         this.container = document.getElementById(containerElementId);
         this.hotels = [];
-        // Por defecto, usa la estrategia de ordenar por precio
+        // aqui se usa la estrategia de ordenar por precio
         this.sortStrategy = new SortByPriceStrategy(); 
     }
 
@@ -13,13 +17,14 @@ export class ResultsList {
         this.hotels = hotels;
     }
 
-    // Requisito clave: Método para cambiar dinámicamente el algoritmo de ordenamiento
+    // Este metod es clave para el patrón Strategy, ya que permite cambiar el algoritmo de ordenamiento en tiempo real
+    // Por ejemplo, en app.js, cuando el usuario selecciona una opción en un menú desplegable, se instancia una nueva estrategia (como SortByRatingStrategy) y se pasa a setSortStrategy()
     setSortStrategy(strategy) {
         this.sortStrategy = strategy;
     }
 
     render() {
-        // Limpiar la lista anterior
+        // Limpiar el contener y verifica si hay hoteles que mostrar y uas la estrategia actual para ordenar la lista antes de generar tarjetas
         this.container.innerHTML = ''; 
 
         if (this.hotels.length === 0) {
@@ -27,19 +32,19 @@ export class ResultsList {
             return;
         }
 
-        // 1. Aplicar la estrategia de ordenamiento actual
+        // Aqui se aplica la estrategia de ordenamiento actual
         const sortedHotels = this.sortStrategy.sort(this.hotels);
 
-        // 2. Renderizar los resultados
+        // Aqui se renderiza los resultados
         sortedHotels.forEach(hotel => {
             const card = document.createElement('div');
             card.classList.add('hotel-card');
             
-            // Usando Template Literals para un HTML limpio
+            // Aqui se usa Template Literals para un HTML limpio
             card.innerHTML = `
                 <div class="hotel-image">
                     <img src="${hotel.ImageUrl}" alt="${hotel.name}">
-                 </div>
+                </div>
                 <div class="hotel-info">
 
                     <h3>${hotel.name}</h3>

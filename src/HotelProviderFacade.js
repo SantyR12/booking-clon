@@ -1,6 +1,11 @@
 // src/HotelProviderFacade.js
-
+// implementa una fachada que simplifica la busqueda de hoteles a traves de apis
+// su objetivo es ocultar la complejidad de interactias con diferentes fuentes de datos
+// esta ofrede un metodo search() que coodrdin las consultas de las apis
 // Clase que simula una API de proveedor
+
+
+// la siguiente clase simula una API de hoteles con datos de prueba
 class ProviderAPI {
     constructor(name, delay = 500) {
         this.name = name;
@@ -12,19 +17,19 @@ class ProviderAPI {
             { id: 103, name: "Hotel C de " + name, price: 200, rating: 4.9, reviews: 500, amenities: ['wifi', 'pool', 'pet_friendly'], ImageUrl: 'https://picsum.photos/id/234/200/300' },
         ];
     }
-
-    // Método que simula una llamada asíncrona (usa Promise)
+// El siguiente metodo simula una llamada asíncrona con un retardo de tiempo y un 20% de error 
+// para imitar escenarios reales y estos se filtran segun las amenidades y se estandarizan segun el nombre del proovedor
     fetch(filters) {
         return new Promise((resolve, reject) => {
             console.log(`[${this.name}] Consultando con filtros:`, filters);
 
-            // Simulación de error (ej. 1 de cada 5 llamadas falla)
+            // Aqui se simula el error
             if (Math.random() < 0.2) {
                 setTimeout(() => reject(new Error(`[${this.name}] Error de conexión o timeout.`)), this.delay);
                 return;
             }
 
-            // Aplicar filtros de amenidades (simulado)
+            // Aqui se aplican los filtros de amenidades
             const filteredResults = this.mockData.filter(hotel => {
                 const anemitiesMatch = filters.appliedFilters.every(appliedFilters => hotel.amenities.includes(appliedFilters)
 
@@ -33,7 +38,7 @@ class ProviderAPI {
             }); 
 
             setTimeout(() => {
-                // Simulación de estructura de respuesta estandarizada
+                // Aqui se estandariza la respuesta
                 const standardResults = filteredResults.map(hotel => ({
                     ...hotel,
                     provider: this.name,
@@ -44,6 +49,7 @@ class ProviderAPI {
     }
 }
 
+// la clases que sigue implementa una fachada que simplifica la busqueda de hoteles a traves del metodo search()
 export class HotelProviderFacade {
     constructor() {
         // Usamos un Array para la lista de APIs conectables
@@ -54,7 +60,7 @@ export class HotelProviderFacade {
         this.addProvider(new ProviderAPI("API BookingAggregator", 700));
     }
 
-    // Requisito clave: hacer la Fachada "conectable" (pluggable)
+    // El metodo permite añadir nuevas apis dinamicamente haciendo el sitema extensible
     addProvider(providerAPI) {
         this.providers.push(providerAPI);
         console.log(`Proveedor añadido: ${providerAPI.name}`);
@@ -67,29 +73,28 @@ export class HotelProviderFacade {
     async search(filters) {
         console.log('--- Buscando en todos los proveedores ---');
         
-        // 1. Crear un Array de Promesas de búsqueda
+        // 1. Aqui se crea un Array de Promesas de búsqueda
         const searchPromises = this.providers.map(provider => provider.fetch(filters));
 
         let allResults = [];
         let errors = [];
 
-        // 2. Usar Promise.allSettled para manejar errores y unificar resultados
+        // Se usa Promise.allSettled para manejar errores y unificar resultados y
         // Promise.allSettled espera que TODAS las promesas terminen (éxito o fracaso)
         const results = await Promise.allSettled(searchPromises);
 
-        // 3. Procesar y unificar resultados
+        // Procesar y unificar resultados
         results.forEach(result => {
             if (result.status === 'fulfilled') {
-                // El resultado es un Array, usamos el operador de propagación (...) para unificar
+                // El resultado es un Array, usamos el operador de propagación para unificar
                 allResults.push(...result.value);
             } else {
-                errors.push(result.reason); // Manejo de errores
+                errors.push(result.reason); 
                 console.error('Error de proveedor:', result.reason.message);
             }
         });
 
         console.log(`Búsqueda finalizada. Hoteles encontrados: ${allResults.length}. Errores: ${errors.length}.`);
-        // Opcional: eliminar duplicados si los ids fueran globales (para simplificar, no lo haremos aquí)
         return allResults;
     }
 }
