@@ -1,4 +1,3 @@
-// src/HotelProviderFacade.js
 // implementa una fachada que simplifica la busqueda de hoteles a traves de apis
 // su objetivo es ocultar la complejidad de interactias con diferentes fuentes de datos
 // esta ofrede un metodo search() que coodrdin las consultas de las apis
@@ -17,7 +16,7 @@ class ProviderAPI {
             { id: 103, name: "Hotel C de " + name, price: 200, rating: 4.9, reviews: 500, amenities: ['wifi', 'pool', 'pet_friendly'], ImageUrl: 'https://picsum.photos/id/234/200/300' },
         ];
     }
-// El siguiente metodo simula una llamada asíncrona con un retardo de tiempo y un 20% de error 
+// El siguiente metodo simula una llamada asíncrona 
 // para imitar escenarios reales y estos se filtran segun las amenidades y se estandarizan segun el nombre del proovedor
     fetch(filters) {
         return new Promise((resolve, reject) => {

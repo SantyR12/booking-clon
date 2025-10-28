@@ -27,7 +27,7 @@ class SearchFiltersManager {
     updateState(newState) {
         this.state = { ...this.state, ...newState };
         console.log('Filtros Actualizados:', this.state);
-        // Aquí se podría emitir un evento global si fuera necesario
+        // Aquí se podría emitir un evento global 
     }
 
     getState() {

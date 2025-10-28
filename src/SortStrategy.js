@@ -1,8 +1,8 @@
-// src/SortStrategy.js
-
 // El archivo implementa el patrón Strategy para ordenar listas de hoteles según diferentes criterios.
-// En la siguiente clase, implementamos tres estrategias de ordenamiento: ordenar por precio, ordenar por puntuación y ordenar por mejor valor
-class SortStrategy {
+// En la siguiente clase, implementamos tres estrategias de ordenamiento: ordenar por precio,
+//  ordenar por puntuación y ordenar por mejor valor
+// el metodo sort es una funcion que ordena los elementos de una coleccion 
+class SortStrategy {  //claase abstracta
     sort(hotels) {
         throw new Error("El método 'sort' debe ser implementado por las subclases.");
     }

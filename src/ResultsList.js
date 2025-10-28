@@ -1,9 +1,8 @@
-// src/ResultsList.js
-
 import { SortByPriceStrategy } from './SortStrategy.js';
 
 // Este srchivo muestra los resultados de la búsqueda y se implementa con la siguiente clase, actuando como contexto del patron strategy
-// esta clase matiene la liste de hoteles y la estrategia de ordenamiento actual y delega el ordenamiento a la estrategia elegida antes de renderiza la vista
+// esta clase matiene la liste de hoteles y la estrategia de ordenamiento actual y delega el ordenamiento a la estrategia elegida antes
+// de renderiza la vista
 
 export class ResultsList {
     constructor(containerElementId) {
@@ -24,7 +23,7 @@ export class ResultsList {
     }
 
     render() {
-        // Limpiar el contener y verifica si hay hoteles que mostrar y uas la estrategia actual para ordenar la lista antes de generar tarjetas
+        // Limpiar el contener y verifica si hay hoteles que mostrar y usa la estrategia actual para ordenar la lista antes de generar tarjetas
         this.container.innerHTML = ''; 
 
         if (this.hotels.length === 0) {
@@ -48,14 +47,15 @@ export class ResultsList {
                 <div class="hotel-info">
 
                     <h3>${hotel.name}</h3>
+                    <div class="hotel-price-details">
+                    <span class="hotel-price"> $${hotel.price}</span>
+                    <small> por noche</small>
+                    </div>
                     <p>⭐ <span class="hotel-rating">${hotel.rating}</span> (${hotel.reviews} reseñas)</p>
                     <p>Filtros: ${hotel.amenities.join(', ')}</p>
-                    <small>Fuente: ${hotel.provider}</small>
+
                 </div>
-                <div class="hotel-price-details">
-                    <span class="hotel-price">$${hotel.price}</span>
-                    <small>por noche</small>
-                </div>
+
             `;
             this.container.appendChild(card);
         });
